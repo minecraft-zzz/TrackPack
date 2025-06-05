@@ -8,6 +8,15 @@
 #include <string>
 #include <Arduino.h>
 
+#define NewLabelUpperHalf "NLUH"
+#define NewLabelLowerHalf "NLLH"
+#define LostLabelUpperHalf  "LLUH"
+#define LostLabelLowerHalf  "LLLH"
+#define FirstTimeConnection "FC"
+#define FirstTimeConnectionUpperHalf "FCUH"
+#define FirstTimeConnectionLowerHalf "FCLH"
+
+
 class BLEManager {
 public:
     BLEManager(std::string serviceUUID, std::string charUUID_RX, std::string charUUID_TX);

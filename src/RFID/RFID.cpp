@@ -17,7 +17,7 @@ void RFID::loop(){
             Serial.print(currentTime);
             Serial.println(":new RFID loop");
         #endif
-        Serial.print(currentTime);
+        //Serial.print(currentTime);
         Serial.println(":new RFID loop");
         Serial.printf("WriteMode:%d,WriteId:%s,",WriteMode,WriteLabelId.c_str());
         if(WriteMode){
@@ -92,7 +92,7 @@ void RFID::WriteLabel(char bank,char epc,char length,std::string LabelID){
     Command += ',';                   // 添加逗号分隔符
     Command += length;                // 添加长度字符
     Command += ',';                   // 添加逗号分隔符
-    Command += LabelID.c_str();               // 添加标签 ID
+    Command += LabelID.c_str();       // 添加标签 ID
     Command += '\r';                  // 添加回车符
     _serial->print(Command.c_str());
     Serial.printf("Command:%s",Command.c_str());

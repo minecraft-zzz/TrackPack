@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include <list>
-#include <vector>
 #include <Arduino.h>
 
 #define RX_BUFFER_LENGTH 256
@@ -20,8 +19,6 @@ class RFID{
         std::string WriteLabelId = "";
         long lastDetectTime;
         long IntervalTime;
-
-        int calculateEpcLength(std::string str);
     
     public:
         std::list<std::string> ReceivedData;
@@ -35,6 +32,7 @@ class RFID{
         void ReceiveMessage(HardwareSerial *RFID_serial);
         void loop();
         void setWriteMode(boolean write,std::string id);
+        int calculateEpcLength(std::string str);
 
     enum RFID_Memory_Map : char {
         RFID_Reserved = '0',
