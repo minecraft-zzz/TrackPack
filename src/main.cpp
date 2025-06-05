@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <vector>
 #include <map>
+#include <queue>
 #include <BLE/BLEManager.h>
 #include <RFID/RFID.h>
 #include <GPS/GPS.h>
@@ -37,6 +38,7 @@
 void customBLECallback(std::string receviedMessage);
 BLEManager BLE(SERVICE_UUID,CHARACTERISTIC_UUID_RX,CHARACTERISTIC_UUID_TX);
 void responseToBLEMessage(std::string receivedMessage);
+std::queue<std::string> bleMessageQueue;
 
 void solveTags(std::string data);
 // void callback(char* topic, byte* payload, unsigned int length); //MQTT回调函数
@@ -88,13 +90,18 @@ void loop(){
         // mqtt.publish(Publish_GPS_Topic,la.c_str());
         // mqtt.publish(Publish_GPS_Topic,lo.c_str());
     }
+    if (!bleMessageQueue.empty()) {
+        std::string msg = bleMessageQueue.front();
+        bleMessageQueue.pop();
+        responseToBLEMessage(msg); // 实际处理
+    }
     maintianTags();
 }
 
 void customBLECallback(std::string receivedMessage) {
     Serial.print("Custom callback received: ");
     Serial.println(receivedMessage.c_str());
-    responseToBLEMessage(receivedMessage);
+    bleMessageQueue.push(receivedMessage); 
     // if(receivedMessage == "W"){
     //     rfid.setWriteMode(true,"4444555566667777");
     // }
